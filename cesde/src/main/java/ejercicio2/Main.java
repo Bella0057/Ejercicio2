@@ -9,12 +9,12 @@ public class Main {
     public static void main(String[] args) {
         crearProducto("Carro", 456000, 3);
 
-        Producto producto1 = leerProducto(1L);  // Asegurándote de pasar el id
+        Producto producto1 = leerProducto(1L);  
         if (producto1 != null) {
-            System.out.println("El producto fue encontrado: " + producto1.getNombre());  // Accediendo al método correctamente
+            System.out.println("El producto ha sido encontrado encontrado: " + producto1.getNombre()); 
         }
 
-        actualizarProducto(1L, "Carro Actualizado", 500000, 5);
+        actualizarProducto(1L, "Carro Actualizado", 705000, 5);
         eliminarProducto(1L);
     }
 
@@ -36,7 +36,7 @@ public class Main {
     // Leer producto
     public static Producto leerProducto(long id) {
         EntityManager em = emf.createEntityManager();
-        Producto producto1 = em.find(Producto.class, id);  // Asegurándote de pasar el id
+        Producto producto1 = em.find(Producto.class, id);  
         em.close();
         return producto1;
     }
@@ -48,9 +48,9 @@ public class Main {
 
         Producto producto1 = em.find(Producto.class, id);
         if (producto1 != null) {
-            producto1.setNombre(nuevoNombre);  // Usando la instancia
-            producto1.setPrecio(nuevoPrecio);  // Usando la instancia
-            producto1.setCantidadEnStock(nuevaCantidadEnStock);  // Usando la instancia
+            producto1.setNombre(nuevoNombre);  
+            producto1.setPrecio(nuevoPrecio);  
+            producto1.setCantidadEnStock(nuevaCantidadEnStock); 
             em.merge(producto1);
         }
         em.getTransaction().commit();
