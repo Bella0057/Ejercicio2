@@ -1,4 +1,4 @@
-import com.example.Entidad.Cliente;
+import com.example.Entidad.Producto;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -9,15 +9,17 @@ public class Main {
     public static void main(String[] args) {
         crearProducto("Carro", 456000, 3);
 
-        Producto producto1 = leerProducto(1l);
-        if (producto1 != null){
-            System.out.println("El producto fue encontrado: " + Producto.getNombre)
+        Producto producto1 = leerProducto(1L);  // Asegurándote de pasar el id
+        if (producto1 != null) {
+            System.out.println("El producto fue encontrado: " + producto1.getNombre());  // Accediendo al método correctamente
         }
-        actualizarProducto(1l);
-        eliminarProducto(1l);
+
+        actualizarProducto(1L, "Carro Actualizado", 500000, 5);
+        eliminarProducto(1L);
     }
 
-    public static void crearProducto(String nombre, int precio, int cantidadEnStock){
+    // Crear producto
+    public static void crearProducto(String nombre, int precio, int cantidadEnStock) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -31,31 +33,37 @@ public class Main {
         em.close();
     }
 
-    public static void leerProducto(){
+    // Leer producto
+    public static Producto leerProducto(long id) {
         EntityManager em = emf.createEntityManager();
-    Producto producto1 = em.find(Producto.class, id);
-    em.close();
-    return producto1;
+        Producto producto1 = em.find(Producto.class, id);  // Asegurándote de pasar el id
+        em.close();
+        return producto1;
     }
 
-    public static void actualizarProducto(long id, String nombre, int precio, int cantidadEnStock){
+    // Actualizar producto
+    public static void actualizarProducto(long id, String nuevoNombre, int nuevoPrecio, int nuevaCantidadEnStock) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
         Producto producto1 = em.find(Producto.class, id);
-        if (producto1 != null){
-            Producto.setNombre(nuevoNombre);
-            Producto.setEmail(nuevoPrecio);
-            Producto.setTelefono(nuevoCantidadEnStock);
+        if (producto1 != null) {
+            producto1.setNombre(nuevoNombre);  // Usando la instancia
+            producto1.setPrecio(nuevoPrecio);  // Usando la instancia
+            producto1.setCantidadEnStock(nuevaCantidadEnStock);  // Usando la instancia
             em.merge(producto1);
         }
         em.getTransaction().commit();
         em.close();
     }
 
-    public static void eliminarProducto(){
+    // Eliminar producto
+    public static void eliminarProducto(long id) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
         Producto producto1 = em.find(Producto.class, id);
-        if (producto1 != null){
+        if (producto1 != null) {
             em.remove(producto1);
         }
 
